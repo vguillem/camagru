@@ -12,7 +12,6 @@
 	<ul class="menu">
 <?php
 include_once(dirname(__FILE__) . '/../../modele/securite.php');
-include_once(dirname(__FILE__) . '/../../modele/ajax.php');
 if (isset($_SESSION['loged']) && !empty($_SESSION['loged']['id']))
 {
 echo "<li><a href='index.php?page=auth&type=compte'>" . Securite::prothtml($_SESSION['loged']['firstname']) . "</a></li>";

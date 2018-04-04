@@ -1,5 +1,13 @@
 <?php
-include_once('connect.php');
+try
+{
+	$bdd = new PDO('mysql:host=localhost', 'root', 'bdroot');
+	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (exeption $e)
+{
+	die("connection failed: " . $e->getMessage());
+}
 
 $sql = "CREATE DATABASE IF NOT EXISTS camagru";
 
@@ -12,6 +20,17 @@ catch(PDOExeption $e) {
 	echo "BDD camagru : ERROR.<br />";
 }
 
+
+$sql = "USE camagru";
+
+try
+{
+	$bdd->exec($sql);
+	echo "use camagru : SUCCES.<br />";
+}
+catch(PDOExeption $e) {
+	echo "use camagru : ERROR.<br />";
+}
 
 $sql = "CREATE TABLE IF NOT EXISTS users (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -144,11 +163,12 @@ try
 	$bdd->exec("INSERT INTO img_montage (id, img) VALUES ('2', 'sapin.png')");
 	$bdd->exec("INSERT INTO img_montage (id, img) VALUES ('3', 'coeur.png')");
 	$bdd->exec("INSERT INTO img_montage (id, img) VALUES ('4', 'yeux.png')");
-	$bdd->conmmit();
+	$bdd->commit();
 	echo "Insertion : SUCCES.<br />";
 }
 catch(PDOExeption $e) {
 	echo "Insertion : ERROR.<br />";
 }
 
+$bdd = NULL;
 ?>
