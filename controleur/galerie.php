@@ -85,6 +85,7 @@ else
 		}
 	}
 	$nbpage = $galerie->nbpage($bdd);
+	$nbpage = 290;
 	$img_galerie = $galerie->img($bdd, $page);
 	include(dirname(__FILE__) . '/../vue/galerie/jgalerie.php');
 }

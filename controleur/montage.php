@@ -57,4 +57,7 @@ else if (isset($_GET['type']))
 else if (!isset($_POST['submit']))
 	include(dirname(__FILE__) . '/../vue/montage/cam.php');
 }
+else
+	include(dirname(__FILE__) . '/../vue/galerie/jgalerie.php');
+
 ?>

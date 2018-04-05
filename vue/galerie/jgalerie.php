@@ -6,7 +6,7 @@ if ($nbpage > 30)
 {
 	echo "<a href='index.php?nopage=" . $nb . "'>" . $nb . "</a><a href=#>...</a>";
 	$nb = $pagination - 2;
-	if ($nb < 0)
+	if ($nb <= 0)
 		$nb = 1;
 	While ($nb <= $pagination + 2 && $nb <= $nbpage)
 	{
@@ -40,7 +40,7 @@ if ($nbpage > 30)
 {
 	echo "<a href='index.php?nopage=" . $nb . "'>" . $nb . "</a><a href=#>...</a>";
 	$nb = $pagination - 2;
-	if ($nb < 0)
+	if ($nb <= 0)
 		$nb = 1;
 	While ($nb <= $pagination + 2 && $nb <= $nbpage)
 	{
