@@ -43,7 +43,10 @@ public function nbpage($bdd)
 	$req = $bdd->prepare("SELECT COUNT(id) AS nbpage FROM galerie");
 	$req->execute();
 	$result = $req->fetch();
-	return ((int)($result['nbpage'] / 5) + 1);
+	$i = 1;
+	if ($result['nbpage'] % 5 === 0)
+		$i = 0;
+	return ((int)($result['nbpage'] / 5) + $i);
 }
 
 public function get_like($id, $bdd)

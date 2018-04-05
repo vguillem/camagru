@@ -76,16 +76,15 @@ else
 {
 	$pagination = 0;
 	$page = 0;
+	$nbpage = $galerie->nbpage($bdd);
 	if (!empty($_GET['nopage']))
 	{
-		if (ctype_digit($_GET['nopage']))
+		if (ctype_digit($_GET['nopage']) && $_GET['nopage'] <= $nbpage)
 		{
 			$pagination = $_GET['nopage'];
 			$page = (intval($_GET['nopage']) - 1) * 5;
 		}
 	}
-	$nbpage = $galerie->nbpage($bdd);
-	$nbpage = 290;
 	$img_galerie = $galerie->img($bdd, $page);
 	include(dirname(__FILE__) . '/../vue/galerie/jgalerie.php');
 }
