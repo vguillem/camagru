@@ -25,7 +25,7 @@ if (isset($_GET['type']))
 					if ($verif === "OK")
 					{
 						$code = $auth->create_tmp($_POST['firstname'], $_POST['lastname'], $_POST['passwd'], $_POST['mail'], $bdd);
-						if ($auth->send_mail($code, $_POST['mail']))
+						if ($auth->send_mail($code, $_POST['mail'], $S_NAME))
 							echo "<p>Compte cree, vous allez recevoir un mail d'activation.</p>";
 					}
 					else
@@ -141,7 +141,7 @@ if (isset($_GET['type']))
 	{
 		if (isset($_POST['submit']) && $_POST['submit'] === "Reinitialiser")
 		{
-			if (isset($_POST['mail']) && $auth->reinitialiser($_POST['mail'], $bdd))
+			if (isset($_POST['mail']) && $auth->reinitialiser($_POST['mail'], $bdd, $S_NAME))
 				$mailsend =  "<p>Vous allez recevoir un mail de reinitialisation.</p>";
 			else
 			{
@@ -151,7 +151,11 @@ if (isset($_GET['type']))
 		include(dirname(__FILE__) . '/../vue/auth/oublie.php');
 	}
 	else if($_GET['type'] === 'resendmail')
+	{
+		if (isset($_POST['mail']))
+			$auth->resendmail($bdd, $_POST['mail'], $S_NAME);
 		include(dirname(__FILE__) . '/../vue/auth/resendmail.php');
+	}
 	else if($_GET['type'] === 'resetmdp')
 	{
 		if(isset($_POST['submit']) && $_POST['submit'] === "Nouveau mot de passe" && isset($_SESSION['resetmdp']) && isset($_POST['passwd']))

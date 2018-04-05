@@ -1,6 +1,11 @@
 <?php
 class Securite {
 
+
+public function __construct()
+{
+}
+
 	public function protsql($str, $bdd) {
 		if (ctype_digit($str))
 		{

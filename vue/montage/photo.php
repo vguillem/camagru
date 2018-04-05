@@ -30,7 +30,6 @@ if(isset($_POST['photo']) && isset($_SESSION['loged']['id']) && isset($_POST['ra
 	$resu = str_replace(' ', '+', $resu);
 	//file_put_contents('../../vue/montage/upload/9.png', $resu);
 	file_put_contents('../../vue/montage/upload/' . $_SESSION['loged']['id'] . '.png', base64_decode($resu));
-	file_put_contents('../../vue/montage/upload/test.html', $_POST['radio']);
 	$id = fusion_img('upload/' . $_SESSION['loged']['id'] . '.png', 'img/' . $_POST['radio'], $bdd);
 	echo json_encode($id);
 }

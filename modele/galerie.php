@@ -1,6 +1,11 @@
 <?PHP
 class Galerie {
 
+
+public function __construct()
+{
+}
+
 public function iflike($user, $id, $bdd)
 {
 	$id = Securite::protsql($id, $bdd);
@@ -84,7 +89,7 @@ public function supprimer($id, $bdd)
 	}
 }
 
-public function commenter($comment, $id, $bdd)
+public function commenter($comment, $id, $bdd, $S_NAME)
 {
 	$comment = Securite::protsql($comment, $bdd);
 	$id = Securite::protsql($id, $bdd);
@@ -101,7 +106,7 @@ public function commenter($comment, $id, $bdd)
 		$req3 = $bdd->prepare("SELECT email FROM users WHERE id='" . $result['user_id'] . "'");
 		$req3->execute();
 		$mail = $req3->fetch();
-		$message = "voir le commentaire : http://5.196.225.53/camagru/index.php?page=galerie&type=image&id=" . $id;
+		$message = "voir le commentaire : " . $S_NAME . "index.php?page=galerie&type=image&id=" . $id;
 		mail($mail['email'], "Votre image a ete commentee", $message);
 	}
 }

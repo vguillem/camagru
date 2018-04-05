@@ -75,7 +75,7 @@ public function verif_pass($pwd)
 	return (true);
 }
 
-public function reinitialiser($mail, $bdd)
+public function reinitialiser($mail, $bdd, $S_NAME)
 {
 	$cmail = Securite::protsql($mail, $bdd);
 	$req3 = $bdd->prepare("DELETE FROM reset_mdp WHERE email=" . $cmail);
@@ -95,7 +95,7 @@ public function reinitialiser($mail, $bdd)
 		if ($result)
 			$rand = 0;
 	}
-	$message = "Bonjour, cliquez sur le lien suivant pour changer votre mot de passe : 5.196.225.53/camagru/index.php?page=auth&reset=" . $rand;
+	$message = "Bonjour, cliquez sur le lien suivant pour changer votre mot de passe : " . $S_NAME . "index.php?page=auth&reset=" . $rand;
 	if(mail($mail, "Reinitialisation mot de passe Camagru", $message))
 	{
 		$req = "INSERT INTO reset_mdp (email, confirmation) VALUES(" . $cmail . ", '" . $rand . "')";
@@ -172,9 +172,23 @@ public function login($mail, $passwd, $bdd)
 	}
 }
 
-public function send_mail($code, $mail)
+public function resendmail($bdd, $mail, $S_NAME)
 {
-	$message = "Bonjour, cliquez sur le lien suivant pour activer votre compte : 5.196.225.53/camagru/index.php?page=auth&code=" . $code;
+	$mailr = Securite::protsql($mail, $bdd);
+	$req = $bdd->prepare("SELECT confirmation FROM users_tmp WHERE email=" . $mailr . " LIMIT 1");
+	$req->execute();
+	$result = $req->fetch();
+	if ($result)
+	{
+		$message = "Bonjour, cliquez sur le lien suivant pour activer votre compte : " . $S_NAME . "index.php?page=auth&code=" . $result['confirmation'];
+		mail($mail, "validation creation compte camagru", $message);
+	}
+}
+
+
+public function send_mail($code, $mail, $S_NAME)
+{
+	$message = "Bonjour, cliquez sur le lien suivant pour activer votre compte : " . $S_NAME . "index.php?page=auth&code=" . $code;
 	if(mail($mail, "validation creation compte camagru", $message))
 		return (true);
 	return (false);

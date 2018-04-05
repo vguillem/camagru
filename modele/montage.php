@@ -1,6 +1,11 @@
 <?php
 class Montage {
 
+
+public function __construct()
+{
+}
+
 public function verif_upload($file)
 {
 	$extv = array('png');

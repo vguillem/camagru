@@ -96,7 +96,7 @@ catch(PDOExeption $e) {
 
 $sql = "CREATE TABLE IF NOT EXISTS galerie (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-img VARCHAR(50) NOT NULL,
+img VARCHAR(50),
 user_id INT(6) UNSIGNED
 )";
 

@@ -21,7 +21,7 @@ if (isset($_GET['type']))
 		{
 			if(isset($_POST['commentaire']))
 			{
-				$galerie->commenter($_POST['commentaire'], $_GET['id'], $bdd);
+				$galerie->commenter($_POST['commentaire'], $_GET['id'], $bdd, $S_NAME);
 			}
 			header('Location: index.php?page=galerie&type=image&id=' . $_GET['id']);
 		}
