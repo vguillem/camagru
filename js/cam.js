@@ -22,6 +22,7 @@ function getHttpRequest()
 }
 	
 	var camok = false;
+	var btoff = false;
 
 	function init() {
 
@@ -34,6 +35,8 @@ function getHttpRequest()
 				video.play();
 			};
 		  camok = true;
+		  if (btoff)
+			  bton();
 		}).catch(function(err) { console.log(err.name + ": " + err.message); });
 	
 	}
@@ -83,6 +86,7 @@ function img(id) {
 	window.onload = init;
 
 	function bton() {
+		btoff = true;
 		var input = document.getElementById('b_creer');
 		if (camok)
 		{
