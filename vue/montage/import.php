@@ -14,13 +14,14 @@ foreach($tab as $v)
 echo $img_upl;
 if (isset($fexist))
 {
-echo "<input id='b_creer' type='submit' onclick='clone(event)' name='submit' value='Selectionner une image'/>";
+echo "<input id='b_creer' type='submit' onclick='clone(event)' name='submit' value='Sélectionner l image à superposer'/>";
 }?>
 </div>
 </form>
+<hr>
 <form class='import' method="post" enctype="multipart/form-data" action="index.php?page=montage">
 <input type='hidden' name='token' value='<?php echo $token ?>'/>
-<label>Selectionner une image a uploader (PNG)</label>
+<label>Si vous ne souhaitez pas utiliser la webcam, choisissez une photo à télécharger(PNG)</label>
 <input type='file' name='img' value=''/>
 <input type='hidden' name='MAX_FILE_SIZE' value='4096000'/>
 <input class='b_importer' type='submit' name='submit' value='importer'>

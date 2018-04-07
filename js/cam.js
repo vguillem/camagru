@@ -21,6 +21,8 @@ function getHttpRequest()
     return null; // non supporté
 }
 	
+	var camok = false;
+
 	function init() {
 
 		navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(function(mediaStream) {
@@ -31,7 +33,7 @@ function getHttpRequest()
 			video.onloadedmetadata = function(e) {
 				video.play();
 			};
-		  
+		  camok = true;
 		}).catch(function(err) { console.log(err.name + ": " + err.message); });
 	
 	}
@@ -82,6 +84,11 @@ function img(id) {
 
 	function bton() {
 		var input = document.getElementById('b_creer');
-		input.value="creer";
-		imgcheck = true;
+		if (camok)
+		{
+			input.value="creer";
+			imgcheck = true;
+		}
+		else
+			input.value="Activez la webcam";
 	}

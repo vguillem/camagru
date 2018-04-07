@@ -3,6 +3,7 @@ include(dirname(__FILE__) . '/../../config/connect.php');
 session_start();
 function fusion_img($dest, $src, $bdd)
 {
+	try {
 	$source = imagecreatefrompng($src);
 	$largeur_source = imagesx($source);
 	$hauteur_source = imagesy($source);
@@ -22,6 +23,10 @@ function fusion_img($dest, $src, $bdd)
 	$ch = dirname(__FILE__) . '/../../vue/montage/galerie/' . $id .'.png';
 	imagepng($destination, $ch);
 	return ($id);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 if(isset($_POST['photo']) && isset($_SESSION['loged']['id']) && isset($_POST['radio']))

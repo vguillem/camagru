@@ -19,13 +19,14 @@ public function verif_upload($file)
 	$img = @imagecreatefrompng($file['tmp_name']);
 	if (!$img)
 		return false;
-	if (imagesx($img) > 500 || imagesy($img) > 350)
+	if (imagesx($img) > 1300 || imagesy($img) > 1300)
 		return (false);
 	return (true);
 }
 
 public function fusion_img($dest, $src, $bdd)
 {
+	try {
 	$source = imagecreatefrompng($src);
 	$largeur_source = imagesx($source);
 	$hauteur_source = imagesy($source);
@@ -45,10 +46,15 @@ public function fusion_img($dest, $src, $bdd)
 	$ch = dirname(__FILE__) . '/../vue/montage/galerie/' . $id .'.png';
 	imagepng($destination, $ch);
 	return ($id);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function img_montage($bdd)
 {
+	try {
 	$tab = array();
 	$req = $bdd->prepare("SELECT img FROM img_montage");
 	$req->execute();
@@ -57,6 +63,10 @@ public function img_montage($bdd)
 		$tab[] = $result['img'];
 	}
 	return ($tab);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function upload_img($file)

@@ -21,24 +21,42 @@ if (isset($_GET['type']))
 			{
 				if ($auth->verif_pass($_POST['passwd']))
 				{
-					$verif = $auth->verif_mail($_POST['mail'], $bdd);
-					if ($verif === "OK")
+					if (strlen($_POST['firstname']) > 30)
 					{
-						$code = $auth->create_tmp($_POST['firstname'], $_POST['lastname'], $_POST['passwd'], $_POST['mail'], $bdd);
-						if ($auth->send_mail($code, $_POST['mail'], $S_NAME))
-							echo "<p>Compte cree, vous allez recevoir un mail d'activation.</p>";
-					}
-					else
-					{
-						$errormail = $verif;
+						$errorfirstname = "<p class='p_error'>Prenom trop long (30max)</p>";
 						include(dirname(__FILE__) . '/../vue/auth/create.php');
-						if ($verif === "<p>Un compte est en cours de creation avec cet email.</p>")
-							include(dirname(__FILE__) . '/../vue/auth/resendmail.php');
+					}
+					else if (strlen($_POST['lastname']) > 30)
+					{
+						$errorlastname = "<p class='p_error'>Nom trop long (30max)</p>";
+						include(dirname(__FILE__) . '/../vue/auth/create.php');
+					}
+					else if (strlen($_POST['mail']) > 50)
+					{
+						$errormail = "<p class='p_error'>Email trop long (50max)</p>";
+						include(dirname(__FILE__) . '/../vue/auth/create.php');
+					}
+					else {
+						$verif = $auth->verif_mail($_POST['mail'], $bdd);
+						if ($verif === "OK")
+						{
+							$code = $auth->create_tmp($_POST['firstname'], $_POST['lastname'], $_POST['passwd'], $_POST['mail'], $bdd);
+							if ($auth->send_mail($code, $_POST['mail'], $S_NAME))
+								$info = "<p class='info' >Compte cree, vous allez recevoir un mail d'activation.</p>";
+								include(dirname(__FILE__) . '/../vue/galerie/jgalerie.php');
+						}
+						else
+						{
+							$errormail = $verif;
+							include(dirname(__FILE__) . '/../vue/auth/create.php');
+							if ($verif === "<p>Un compte est en cours de creation avec cet email.</p>")
+								include(dirname(__FILE__) . '/../vue/auth/resendmail.php');
+						}
 					}
 				}
 				else
 				{
-					$errorpasswd = "<p class='p_error'>Le mot de passe doit faire 8 caractere minimum, contenir minuscule, majuscule et chiffre.</p>";
+					$errorpasswd = "<p class='p_error'>Le mot de passe doit contenir 8 caractères minimum, avec au moins une minuscule, une majuscule et un chiffre.</p>";
 					include(dirname(__FILE__) . '/../vue/auth/create.php');
 				}
 			}
@@ -72,25 +90,39 @@ if (isset($_GET['type']))
 			{
 				if ($auth->verif_pass($_POST['passwd']) || empty($_POST['passwd']))
 				{
-					if (!empty($_POST['mail']))
-						$verif = $auth->verif_mail($_POST['mail'], $bdd);
-					else
-						$verif = "OK";
-					if ($verif === "OK")
+					if (!empty($_POST['firstname']) && strlen($_POST['firstname']) > 30)
 					{
-						if ($auth->modifier($_POST['mail'], $_POST['passwd'], $_POST['firstname'], $_POST['lastname'], $_POST['oldpasswd'], $bdd))
-							$info = "<p>Compte mis a jour.</p>";
-						else
-							$erroroldpasswd = "<p class='p_error' >Ancien mot de passe incorrect.</p>";
+						$errorfirstname = "<p class='p_error'>Prenom trop long (30max)</p>";
 					}
-					else
+					else if (!empty($_POST['lastname']) && strlen($_POST['lastname']) > 30)
 					{
-						$errormail = $verif;
+						$errorlastname = "<p class='p_error'>Nom trop long (30max)</p>";
+					}
+					else if (!empty($_POST['mail']) && strlen($_POST['mail']) > 50)
+					{
+						$errormail = "<p class='p_error'>Email trop long (50max)</p>";
+					}
+					else {
+						if (!empty($_POST['mail']))
+							$verif = $auth->verif_mail($_POST['mail'], $bdd);
+						else
+							$verif = "OK";
+						if ($verif === "OK")
+						{
+							if ($auth->modifier($_POST['mail'], $_POST['passwd'], $_POST['firstname'], $_POST['lastname'], $_POST['oldpasswd'], $bdd))
+								$info = "<p>Compte mis a jour.</p>";
+							else
+								$erroroldpasswd = "<p class='p_error' >Ancien mot de passe incorrect.</p>";
+						}
+						else
+						{
+							$errormail = $verif;
+						}
 					}
 				}
 				else
 				{
-					$errorpasswd = "<p class='p_error'>Le mot de passe doit faire 8 caractere minimum, contenir minuscule, majuscule et chiffre.</p>";
+					$errorpasswd = "<p class='p_error'>Le mot de passe doit contenir 8 caractères minimum, avec au moins une minuscule, une majuscule et un chiffre.</p>";
 				}
 			}
 			include(dirname(__FILE__) . '/../vue/auth/modif.php');
@@ -163,11 +195,16 @@ if (isset($_GET['type']))
 			if ($auth->verif_pass($_POST['passwd']))
 			{
 				if ($auth->resetmdp($_SESSION['resetmdp'], $_POST['passwd'], $bdd) === false)
+				{
 					echo "<p class='p_error'>Erreur de reinitialisation</p>";
+					include(dirname(__FILE__) . '/../vue/auth/resetmdp.php');
+				}
+				$info = "<p class='info'>Mot de passe reinitialise</p>";
+				include(dirname(__FILE__) . '/../vue/galerie/jgalerie.php');
 			}
 			else
 			{
-				$errorpasswd = "<p class='p_error'>Le mot de passe doit faire 8 caractere minimum, contenr minuscule, majuscule et chiffre.</p>";
+				$errorpasswd = "<p class='p_error'>Le mot de passe doit contenir 8 caractères minimum, avec au moins une minuscule, une majuscule et un chiffre.</p>";
 				include(dirname(__FILE__) . '/../vue/auth/resetmdp.php');
 			}
 		}

@@ -20,6 +20,7 @@ position:relative;
 	background-color: lightblue;
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
+	font-family: fantasy;
 }
 
 header {
@@ -443,6 +444,10 @@ h1 {
 	color:white;
 	text-align:center;
 }
+h3 {
+	color: lightblue;
+	text-align: center;
+}
 
 .btn {
   background: #3498db;
@@ -486,3 +491,39 @@ h1 {
 	color: white;
 }
 .pagination a:hover:not(.active) {background-color: #ddd;}
+
+li {
+	background-color: lightblue;
+}
+.noi {
+	background: #3498db;
+	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+	background-image: -o-linear-gradient(top, #3498db, #2980b9);
+	background-image: linear-gradient(to bottom, #3498db, #2980b9);
+	-webkit-border-radius: 60;
+	-moz-border-radius: 60;
+	border-radius: 60px;
+	font-family: Georgia;
+	color: #f4f5f7;
+	font-size: 13px;
+	padding: 5px 10px 5px 10px;
+	border: solid #4caeeb 3px;
+	text-decoration: none;
+}
+
+.noi:hover {
+	background: #f4f5f7;
+	text-decoration: none;
+}
+.info {
+	color : green;
+}
+.comment {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	border-radius: 5%;
+	background-color: cadetblue;
+}

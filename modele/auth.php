@@ -7,6 +7,7 @@ public function __construct()
 
 public function verif_reset($code, $bdd)
 {
+	try {
 	$code = Securite::protsql($code, $bdd);
 	$req = $bdd->prepare("SELECT email FROM reset_mdp WHERE confirmation=" . $code);
 	$req->execute();
@@ -26,18 +27,28 @@ public function verif_reset($code, $bdd)
 		}
 	}
 	return (false);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function resetmdp($code, $passwd, $bdd)
 {
+	try {
 	$passwd = hash('whirlpool', $passwd);
 	$code = Securite::protsql($code, $bdd);
 	$req3 = "UPDATE users SET passwd='" . $passwd . "' WHERE id=" . $code;
 	$bdd->exec($req3);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function ifam($bdd)
 {
+	try {
 	$req = $bdd->prepare("SELECT id FROM alertemail WHERE user_id='" . $_SESSION['loged']['id'] . "'");
 	$req->execute();
 	while ($result = $req->fetch())
@@ -45,18 +56,33 @@ public function ifam($bdd)
 		return (true);
 	}
 	return (false);
+
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function alertemailoff($bdd)
 {
+	try {
 	$req = "INSERT INTO alertemail (am, user_id) VALUES('1', '" . $_SESSION['loged']['id'] . "')";
 	$bdd->exec($req);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function alertemailon($bdd)
 {
+	try {
 	$req = "DELETE FROM alertemail WHERE user_id='" . $_SESSION['loged']['id'] . "'";
 	$bdd->exec($req);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function verif_pass($pwd)
@@ -77,6 +103,7 @@ public function verif_pass($pwd)
 
 public function reinitialiser($mail, $bdd, $S_NAME)
 {
+	try {
 	$cmail = Securite::protsql($mail, $bdd);
 	$req3 = $bdd->prepare("DELETE FROM reset_mdp WHERE email=" . $cmail);
 	$req3->execute();
@@ -102,6 +129,10 @@ public function reinitialiser($mail, $bdd, $S_NAME)
 		$bdd->exec($req);
 	}
 	return (true);
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
+	}
 }
 
 public function modifier($mail, $passwd, $firstname, $lastname, $oldpasswd, $bdd)
@@ -174,6 +205,7 @@ public function login($mail, $passwd, $bdd)
 
 public function resendmail($bdd, $mail, $S_NAME)
 {
+	try {
 	$mailr = Securite::protsql($mail, $bdd);
 	$req = $bdd->prepare("SELECT confirmation FROM users_tmp WHERE email=" . $mailr . " LIMIT 1");
 	$req->execute();
@@ -182,6 +214,10 @@ public function resendmail($bdd, $mail, $S_NAME)
 	{
 		$message = "Bonjour, cliquez sur le lien suivant pour activer votre compte : " . $S_NAME . "index.php?page=auth&code=" . $result['confirmation'];
 		mail($mail, "validation creation compte camagru", $message);
+	}
+	}
+	catch(PDOExeption $e) {
+		echo "error : " . $e;
 	}
 }
 

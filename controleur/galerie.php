@@ -19,7 +19,7 @@ if (isset($_GET['type']))
 			header('Location: index.php?page=auth&type=join');
 		if(isset($_POST['submit']) && $_POST['submit'] === "Commenter" && $id !== 0 && isset($_SESSION['token']) && isset($_POST['token']) && $_SESSION['token'] === $_POST['token'])
 		{
-			if(isset($_POST['commentaire']))
+			if(isset($_POST['commentaire']) && strlen($_POST['commentaire']) < 1000000000)
 			{
 				$galerie->commenter($_POST['commentaire'], $_GET['id'], $bdd, $S_NAME);
 			}

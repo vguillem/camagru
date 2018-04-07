@@ -9,6 +9,7 @@
 <body>
 <header>
     <a href="index.php"><h1>Camagru</h1></a>
+	<h3>Partager vos creations</h3>
 	<ul class="menu">
 <?php
 include_once(dirname(__FILE__) . '/../../modele/securite.php');

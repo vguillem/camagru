@@ -12,11 +12,12 @@ if (isset($commentaire))
 {
 foreach($commentaire as $v)
 {
-
+	echo "<div class='comment'>";
 	echo "<p>";
 	echo Securite::prothtml($v['commentaire']);
 	echo "</p><p class='p_user'>";
 	echo Securite::prothtml($v['user']) . "</p>";
+	echo "</div>";
 }
 echo "<p>total like :" . $liker . "</p>";
 }

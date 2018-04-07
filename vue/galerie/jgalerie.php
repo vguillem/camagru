@@ -1,3 +1,9 @@
+<?PHP
+if (!empty($info))
+{
+	echo $info;
+}
+?>
 <noscript>
 <?PHP
 echo "<div class='pagination'>";
