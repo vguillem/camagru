@@ -37,7 +37,7 @@ function getHttpRequest()
 		  camok = true;
 		  if (btoff)
 			  bton();
-		}).catch(function(err) { console.log(err.name + ": " + err.message); });
+		}).catch(function(err) { });
 	
 	}
 	var imgcheck = false;

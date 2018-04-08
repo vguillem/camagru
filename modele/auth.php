@@ -168,7 +168,7 @@ public function modifier($mail, $passwd, $firstname, $lastname, $oldpasswd, $bdd
 		if (!empty($passwd))
 		{
 			$passwd = hash('whirlpool', $passwd);
-			$req = "UPDATE users SET passwd =" . $passwd . " WHERE id='" . $_SESSION['loged']['id'] . "'";
+			$req = "UPDATE users SET passwd ='" . $passwd . "' WHERE id='" . $_SESSION['loged']['id'] . "'";
 			$bdd->exec($req);
 		}
 		return(true);

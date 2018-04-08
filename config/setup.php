@@ -158,6 +158,23 @@ catch(PDOExeption $e) {
 
 try
 {
+	$stmt = $bdd->prepare("SELECT * FROM img_montage");
+	$stmt->execute();
+	$result = $stmt->fetch();
+	if ($result)
+	{
+		$imgexist = true;
+	}
+	else
+		$imgexist = false;
+}
+catch(PDOExeption $e) {
+	echo "SELECT : ERROR.<br />";
+}
+
+if (!$imgexist) {
+try
+{
 	$bdd->beginTransaction();
 	$bdd->exec("INSERT INTO img_montage (id, img) VALUES ('1', 'sang.png')");
 	$bdd->exec("INSERT INTO img_montage (id, img) VALUES ('2', 'sapin.png')");
@@ -169,6 +186,6 @@ try
 catch(PDOExeption $e) {
 	echo "Insertion : ERROR.<br />";
 }
-
+}
 $bdd = NULL;
 ?>

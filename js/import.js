@@ -31,6 +31,8 @@ function getHttpRequest()
 
 	function bton() {
 		var input = document.getElementById('b_creer');
-		input.value="creer";
-		imgcheck = true;
+		if (input) {
+			input.value="creer";
+			imgcheck = true;
+		}
 	}
